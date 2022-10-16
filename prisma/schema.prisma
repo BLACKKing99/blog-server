@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  id        Int       @id @default(autoincrement()) @db.UnsignedInt
+  name      String
+  account   Int       @unique
+  email     String    @unique
+  password  String
+  sex       Int       @default(0)
+  // 身份
+  identity  String    @default("member")
+  // 头像
+  avatar    String?
+  // 收藏的文章
+  collect   String?   @default("[]")
+  // 职业信息
+  career    String?
+  qq        String?
+  weixin    String?
+  bio       String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  comment   comment[]
+}
+
+model category {
+  id        Int       @id @default(autoincrement()) @db.UnsignedInt
+  title     String
+  // 提示
+  tips      String?
+  articleId article[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model article {
+  id         Int       @id @default(autoincrement()) @db.UnsignedInt
+  title      String
+  content    String    @db.Text
+  tips       String?
+  order      Int
+  cover      String?
+  category   category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId Int       @db.UnsignedInt
+  commentId  comment[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model comment {
+  id        Int      @id @default(autoincrement()) @db.UnsignedInt
+  content   String   @db.Text
+  article   article  @relation(fields: [articleId], references: [id])
+  articleId Int      @db.UnsignedInt
+  author    user     @relation(fields: [userId], references: [id])
+  pid       Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    Int      @db.UnsignedInt
+}
