@@ -16,7 +16,7 @@ export class TransformInterceptor implements NestInterceptor {
         // 请求完成之后
         const endTime = Date.now()
         new Logger().log(`TIME:${endTime - startTime}\tURL:${request.path}\tMETHOD:${request.method}`)
-        if (data.user) {
+        if (data && data.user) {
           delete data.user.password
         }
         const _data = {
