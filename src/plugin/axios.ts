@@ -9,6 +9,7 @@ export const request = (method: 'POST' | 'GET', url: string, data: any, options:
   if (options.crypto === 'weapi') {
     _data.csrf_token = ''
     _data = weapi(_data)
+    url = url.replace(/\w*api/, 'weapi')
   } else if (options.crypto === 'eapi') {
     _data = eapi(options.url, _data)
   }

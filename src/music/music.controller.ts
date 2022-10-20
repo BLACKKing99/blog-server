@@ -8,6 +8,7 @@ import {
   IMusicUrl,
   ISheetDetail,
   ISingerDetail,
+  ISingerList,
   IVocaRecommend
 } from './dto/music.dto'
 import { MusicService } from './music.service'
@@ -56,6 +57,12 @@ export class MusicController {
   // 获取音乐详情
   getMusicDetail(@Query() query: IMusicDetail) {
     return this.musicService.getMusicDetail(query)
+  }
+
+  @Get('artists')
+  // 获取歌手单曲
+  getSingerList(@Query() query: ISingerList) {
+    return this.musicService.getSingerList(query)
   }
 
   @Get('lyric')

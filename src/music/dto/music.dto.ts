@@ -41,3 +41,7 @@ export interface IMusicLyric {
 export interface ISingerDetail {
   id: number
 }
+
+export interface ISingerList {
+  id: number
+}

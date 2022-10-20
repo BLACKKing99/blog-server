@@ -7,6 +7,7 @@ import {
   IMusicUrl,
   ISheetDetail,
   ISingerDetail,
+  ISingerList,
   IVocaRecommend
 } from './dto/music.dto'
 import { request } from 'src/plugin/axios'
@@ -118,13 +119,27 @@ export class MusicService {
     return data
   }
 
+  async getSingerList(query: ISingerList) {
+    const { data } = await request(
+      'POST',
+      `https://music.163.com/weapi/v1/artist/${query.id}`,
+      {},
+      {
+        crypto: 'weapi'
+      }
+    )
+    return data
+  }
+
   async getSingerDetail(query: ISingerDetail) {
-    const _query = {
-      id: query.id
-    }
-    const { data } = await request('POST', `https://music.163.com/api/artist/head/info/get`, _query, {
-      crypto: 'weapi'
-    })
+    const { data } = await request(
+      'POST',
+      `https://music.163.com/api/artist/head/info/get`,
+      { id: query.id },
+      {
+        crypto: 'weapi'
+      }
+    )
     return data
   }
 }
