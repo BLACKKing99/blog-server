@@ -45,3 +45,16 @@ export interface ISingerDetail {
 export interface ISingerList {
   id: number
 }
+
+export interface ISingerListLimit {
+  id: number
+  order?: 'hot' | 'time'
+  limit?: number
+  offset?: number
+}
+
+export interface IAlbumList {
+  id: number
+  limit: number
+  offset: number
+}

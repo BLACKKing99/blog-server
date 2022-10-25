@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import {
+  IAlbumList,
   IBoutique,
   IHotType,
   IMusicDetail,
@@ -8,6 +9,7 @@ import {
   ISheetDetail,
   ISingerDetail,
   ISingerList,
+  ISingerListLimit,
   IVocaRecommend
 } from './dto/music.dto'
 import { request } from 'src/plugin/axios'
@@ -140,6 +142,33 @@ export class MusicService {
         crypto: 'weapi'
       }
     )
+    return data
+  }
+
+  async getSingerListLimit(query: ISingerListLimit) {
+    const _query = {
+      id: query.id,
+      private_cloud: 'true',
+      work_type: 1,
+      order: query.order || 'hot', //hot,time
+      offset: query.offset || 0,
+      limit: query.limit || 100
+    }
+    const { data } = await request('POST', `https://music.163.com/api/v1/artist/songs`, _query, {
+      crypto: 'weapi'
+    })
+    return data
+  }
+
+  async getAlbumList(query: IAlbumList) {
+    const _query = {
+      limit: query.limit || 30,
+      offset: query.offset || 0,
+      total: true
+    }
+    const { data } = await request('POST', `https://music.163.com/weapi/artist/albums/${query.id}`, _query, {
+      crypto: 'weapi'
+    })
     return data
   }
 }

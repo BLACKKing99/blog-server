@@ -19,6 +19,9 @@ export class TransformInterceptor implements NestInterceptor {
         if (data && data.user) {
           delete data.user.password
         }
+        if (data && data.data) {
+          data = data.data
+        }
         const _data = {
           code: 0,
           message: '请求成功',

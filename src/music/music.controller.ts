@@ -1,6 +1,7 @@
 import { Controller, Get, Query } from '@nestjs/common'
 import { ToInt } from 'src/pipes/ToInt.pip'
 import {
+  IAlbumList,
   IBoutique,
   IHotType,
   IMusicDetail,
@@ -9,6 +10,7 @@ import {
   ISheetDetail,
   ISingerDetail,
   ISingerList,
+  ISingerListLimit,
   IVocaRecommend
 } from './dto/music.dto'
 import { MusicService } from './music.service'
@@ -75,5 +77,17 @@ export class MusicController {
   // 获取歌手详情
   getSingerDetail(@Query(new ToInt('id')) query: ISingerDetail) {
     return this.musicService.getSingerDetail(query)
+  }
+
+  @Get('artist/songs')
+  // 歌手全部歌曲
+  getSingerListLimit(@Query(new ToInt('id,limit,offset')) query: ISingerListLimit) {
+    return this.musicService.getSingerListLimit(query)
+  }
+
+  @Get('artist/album')
+  // 歌手全部歌曲
+  getAlbumList(@Query(new ToInt('id,limit,offset')) query: IAlbumList) {
+    return this.musicService.getAlbumList(query)
   }
 }
