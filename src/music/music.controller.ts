@@ -2,11 +2,14 @@ import { Controller, Get, Query } from '@nestjs/common'
 import { ToInt } from 'src/pipes/ToInt.pip'
 import {
   IAlbumList,
+  IAllMvList,
   IBoutique,
   IHotType,
   IMusicDetail,
   IMusicLyric,
   IMusicUrl,
+  IMvDetail,
+  IMvList,
   ISheetDetail,
   ISingerDetail,
   ISingerList,
@@ -86,8 +89,26 @@ export class MusicController {
   }
 
   @Get('artist/album')
-  // 歌手全部歌曲
+  // 歌手全部专辑
   getAlbumList(@Query(new ToInt('id,limit,offset')) query: IAlbumList) {
     return this.musicService.getAlbumList(query)
+  }
+
+  @Get('artist/mv')
+  // 歌手全部mv
+  getMvList(@Query(new ToInt('id,limit,offset')) query: IMvList) {
+    return this.musicService.getMvList(query)
+  }
+
+  @Get('mv/all')
+  // 歌手全部歌曲
+  getAllMvList(@Query(new ToInt('id,limit,offset')) query: IAllMvList) {
+    return this.musicService.getAllMvList(query)
+  }
+
+  @Get('mv/detail')
+  // mv详情
+  getMvDetail(@Query(new ToInt('id')) query: IMvDetail) {
+    return this.musicService.getMvDetail(query)
   }
 }

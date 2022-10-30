@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common'
 import {
   IAlbumList,
+  IAllMvList,
   IBoutique,
   IHotType,
   IMusicDetail,
   IMusicLyric,
   IMusicUrl,
+  IMvDetail,
+  IMvList,
   ISheetDetail,
   ISingerDetail,
   ISingerList,
@@ -167,6 +170,46 @@ export class MusicService {
       total: true
     }
     const { data } = await request('POST', `https://music.163.com/weapi/artist/albums/${query.id}`, _query, {
+      crypto: 'weapi'
+    })
+    return data
+  }
+
+  async getMvList(query: IMvList) {
+    const _query = {
+      artistId: query.id,
+      limit: query.limit || 20,
+      offset: query.offset || 0,
+      total: true
+    }
+    const { data } = await request('POST', `https://music.163.com/weapi/artist/mvs`, _query, {
+      crypto: 'weapi'
+    })
+    return data
+  }
+
+  async getAllMvList(query: IAllMvList) {
+    const _query = {
+      tags: JSON.stringify({
+        地区: query.area || '全部',
+        类型: query.type || '全部',
+        排序: query.order || '上升最快'
+      }),
+      offset: query.offset || 0,
+      total: 'true',
+      limit: query.limit || 30
+    }
+    const { data } = await request('POST', `https://interface.music.163.com/api/mv/all`, _query, {
+      crypto: 'weapi'
+    })
+    return data
+  }
+
+  async getMvDetail(query: IMvDetail) {
+    const _query = {
+      id: query.id
+    }
+    const { data } = await request('POST', `https://music.163.com/api/v1/mv/detail`, _query, {
       crypto: 'weapi'
     })
     return data

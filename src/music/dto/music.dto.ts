@@ -55,6 +55,24 @@ export interface ISingerListLimit {
 
 export interface IAlbumList {
   id: number
-  limit: number
-  offset: number
+  limit?: number
+  offset?: number
+}
+
+export interface IMvList {
+  id: number
+  limit?: number
+  offset?: number
+}
+
+export interface IAllMvList {
+  area?: string
+  order?: number
+  type?: string
+  limit?: number
+  offset?: number
+}
+
+export interface IMvDetail {
+  id: number
 }
