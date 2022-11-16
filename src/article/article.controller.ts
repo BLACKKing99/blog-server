@@ -14,6 +14,10 @@ export class ArticleController {
   create(@Body() createArticleDto: CreateArticleDto) {
     return this.articleService.create(createArticleDto)
   }
+  @Post('preview')
+  addPreview(@Body(new ToInt('id')) data: { id: number }) {
+    return this.articleService.addPreview(data.id)
+  }
 
   @Get()
   findAll(@Query(new ToInt('page,pageSize')) params: ArticleDto) {

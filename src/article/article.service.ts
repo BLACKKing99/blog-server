@@ -23,6 +23,24 @@ export class ArticleService {
     return _article
   }
 
+  async addPreview(id: number) {
+    const curArc = await this.prisma.article.findUnique({
+      where: {
+        id
+      }
+    })
+    // 添加预览量
+    await this.prisma.article.update({
+      where: {
+        id
+      },
+      data: {
+        priview: curArc.priview + 1
+      }
+    })
+    return ''
+  }
+
   // 获取所有文章
   async findAll(params: ArticleDto) {
     const { page, pageSize } = params
@@ -30,9 +48,27 @@ export class ArticleService {
       skip: (page - 1) * pageSize,
       take: pageSize
     })
+    const _article = []
+    const article = articles.map((item) => {
+      return new Promise(async (resolve) => {
+        const comment = await this.prisma.comment.findMany({
+          where: {
+            articleId: item.id
+          }
+        })
+        resolve({
+          ...item,
+          coomentAcount: comment.length
+        })
+      })
+    })
+
+    for (const key of article) {
+      const res = await key
+      _article.push(res)
+    }
     // 序列化 去除不需要的字段或者是格式化字段
-    const _article = articles.map((item) => new Article(item))
-    return _article
+    return _article.map((item) => new Article(item))
   }
   // 根据id 获取文章
   async findOne(id: number) {

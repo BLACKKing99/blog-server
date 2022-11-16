@@ -9,6 +9,7 @@ import {
   IMusicUrl,
   IMvDetail,
   IMvList,
+  IMvUrl,
   ISheetDetail,
   ISingerDetail,
   ISingerList,
@@ -210,6 +211,19 @@ export class MusicService {
       id: query.id
     }
     const { data } = await request('POST', `https://music.163.com/api/v1/mv/detail`, _query, {
+      crypto: 'weapi'
+    })
+    return data
+  }
+
+  async getMvUrl(query: IMvUrl) {
+    const _query = {
+      id: query.id,
+      r: query.r || 1080
+    }
+    console.log(_query)
+
+    const { data } = await request('POST', `https://music.163.com/weapi/song/enhance/play/mv/url`, _query, {
       crypto: 'weapi'
     })
     return data

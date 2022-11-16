@@ -76,3 +76,8 @@ export interface IAllMvList {
 export interface IMvDetail {
   id: number
 }
+
+export interface IMvUrl {
+  id: number
+  r: number
+}

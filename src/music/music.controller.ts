@@ -10,6 +10,7 @@ import {
   IMusicUrl,
   IMvDetail,
   IMvList,
+  IMvUrl,
   ISheetDetail,
   ISingerDetail,
   ISingerList,
@@ -110,5 +111,11 @@ export class MusicController {
   // mv详情
   getMvDetail(@Query(new ToInt('id')) query: IMvDetail) {
     return this.musicService.getMvDetail(query)
+  }
+
+  @Get('mv/url')
+  // mv详情
+  getMvUrl(@Query() query: IMvUrl) {
+    return this.musicService.getMvUrl(query)
   }
 }

@@ -9,7 +9,7 @@ export class ToInt implements PipeTransform {
   }
   transform(value: any, metadata: ArgumentMetadata) {
     let _data = cloneDeep(value)
-    if (typeof _data === 'string') {
+    if (typeof _data === 'string' || typeof _data === 'number') {
       // 如果是字符串
       _data = Number(_data)
     } else if (typeof _data === 'object' && !Array.isArray(_data)) {

@@ -50,6 +50,7 @@ model article {
   tips       String?
   order      Int
   cover      String?
+  priview    Int       @default(0)
   category   category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId Int       @db.UnsignedInt
   commentId  comment[]
